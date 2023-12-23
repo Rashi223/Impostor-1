@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Impostor Santa</title>
+  <style>
+    /* Styles for the body and ring box */
+    body {
+      font-family: 'Segoe Script', sans-serif; /* Romantic font style */
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Hide overflow content */
+      background-color: #f7e0e8; /* Soft pink background for a romantic feel */
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .ring-box {
+      margin-top: 20px;
+    }
+
+    #ring {
+      width: 200px; /* Adjust dimensions as needed */
+      height: 200px;
+      border: 2px solid #000;
+      border-radius: 50%;
+      background-color: #fff;
+      display: none; /* Hide the ring by default */
+      margin: 20px auto;
+      opacity: 0; /* Set initial opacity to 0 */
+      animation: fadeIn 1.5s ease-in-out forwards; /* Animation to fade in the ring */
+    }
+
+    #ring img {
+      max-width: 100%;
+      max-height: 100%;
+      /* Additional styles for the image can be added here */
+    }
+
+    /* Your Present button */
+    #presentBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      border: none;
+      background-color: #ff007f; /* Pinkish button color */
+      color: #fff;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    #presentBtn:hover {
+      background-color: #ff0055; /* Darker pink on hover */
+      transform: scale(1.05); /* Slightly increase size on hover */
+    }
+
+    /* Animation to fade in the ring */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Heart animation */
+    .hearts {
+      position: absolute;
+      top: -100px; /* Start hearts from above the screen */
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px; /* Increase heart size */
+      height: 30px; /* Increase heart size */
+      background-color: #ff007f; /* Heart color */
+      opacity: 0;
+      transform: rotate(-45deg) scale(0); /* Initial state: scaled down and rotated */
+      animation: heartDrop 2s linear infinite; /* Animation for heart dropping */
+    }
+
+    /* Keyframes for heart animation */
+    @keyframes heartDrop {
+      0% {
+        opacity: 0;
+        transform: translateY(-100px) rotate(-45deg) scale(0);
+      }
+      10% {
+        opacity: 1;
+        transform: translateY(0) rotate(-45deg) scale(1);
+      }
+      90% {
+        opacity: 1;
+        transform: translateY(100vh) rotate(-45deg) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(100vh) rotate(-45deg) scale(0);
+      }
+    }
+
+    /* Rain animation */
+    .rain {
+      position: absolute;
+      width: 2px;
+      height: 60px;
+      background-color: #0000ff; /* Blue raindrop color */
+      animation: raindrop 0.5s linear infinite;
+    }
+
+    @keyframes raindrop {
+      from {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+    }
+
+    /* Romantic font for the message */
+    #message {
+      font-family: 'Segoe Script', sans-serif;
+      display: none; /* Initially hide the message */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Impostor Santa Wants to Gift you Something.</h1>
+    <div class="ring-box">
+      <input type="text" id="nameInput" placeholder="Enter name">
+      <button id="presentBtn" onclick="openRingBox()">Your Present</button>
+      <div id="ring">
+        <img src="Ring.png" alt="Ring Image">
+      </div>
+      <p id="message"><b>Merry Christmas Rashii!</b><br>Ring Box ka Budget nahi tha to Virtual Ring Box for U<br>Here's your Ring Box with a Ring For Future,<br> I know its doesn't look like a Ring-box but samaj jana<br>Wishing you very best for your future Paegeant<br><b>I want you to conquer and come</b><br>Well, Some of the feelings should be said later,<br> _ _ _ _  <br>  _ _u <br></p>
+    </div>
+  </div>
+
+  <div class="hearts">
+    <!-- Generate hearts using JavaScript -->
+  </div>
+
+  <audio id="myAudio">
+    <source src="Ek-Ladki-Ko-Dekha-To-Aisa-Laga(PaglaSongs).mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    let audioDuration = 60; // Set the audio duration to 60 seconds (1 minute)
+    let audioStopped = false;
+
+    // Function to stop the audio after 1 minute
+    function stopAudioAfterDuration() {
+      setTimeout(() => {
+        if (!audioStopped) {
+          const audio = document.getElementById('myAudio');
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      }, audioDuration * 10000);
+    }
+
+    // Function to play or stop the audio
+    function toggleAudio() {
+      const audio = document.getElementById('myAudio');
+
+      if (audio.paused) {
+        audioStopped = false;
+        audio.play();
+        stopAudioAfterDuration();
+      } else {
+        audioStopped = true;
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    }
+
+    function openRingBox() {
+      const nameInput = document.getElementById('nameInput').value.trim().toLowerCase();
+      const ring = document.getElementById('ring');
+      const message = document.getElementById('message');
+      const audio = document.getElementById('myAudio');
+
+      if (nameInput === "impostor") {
+        ring.style.display = "block"; // Show the ring
+        message.style.display = "block"; // Show the message
+        document.body.style.backgroundColor = "#ffe6f1"; // Lighter background for a festive feel
+        setTimeout(() => {
+          document.body.style.backgroundColor = "#f7e0e8"; // Revert back to the original background color
+        }, 2000); // Change the background color back after 2 seconds
+
+        createRain(); // Generate rain after showing the message
+        createHearts(); // Generate hearts after showing the message
+
+        toggleAudio(); // Play/stop the audio
+      } else {
+        alert("Invalid name. The Valid name will be _ _ _ _ _ _ _ _. Hint: 1st Time i introduce myself in online mode");
+      }
+    }
+
+    function createRain() {
+      const rainContainer = document.createElement('div');
+      rainContainer.classList.add('rain-container');
+      document.body.appendChild(rainContainer);
+
+      for (let i = 0; i < 100; i++) {
+        const raindrop = document.createElement('div');
+        raindrop.classList.add('rain');
+        raindrop.style.left = `${Math.random() * window.innerWidth}px`;
+        raindrop.style.animationDuration = `${Math.random() * 1 + 0.5}s`;
+        raindrop.style.animationDelay = `${Math.random() * 2}s`;
+        rainContainer.appendChild(raindrop);
+      }
+    }
+
+    function createHearts() {
+      const heartsContainer = document.querySelector('.hearts');
+      const numberOfHearts = 50; // Number of hearts to generate
+
+      for (let i = 0; i < numberOfHearts; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDelay = `${Math.random() * 5}s`;
+        heartsContainer.appendChild(heart);
+      }
+    }
+  </script>
+</body>
+</html>
